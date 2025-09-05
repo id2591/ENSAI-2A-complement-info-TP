@@ -1,4 +1,4 @@
-from business_object.pokemon.pokemon import Pokemon
+from business_object.pokemon.abstract_pokemon import AbstractPokemon
 from business_object.statistic import Statistic
 
 # Create statistics for the following pokemon
