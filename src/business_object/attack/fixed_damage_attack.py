@@ -6,21 +6,20 @@ class FixedDamageAttack(AbstractAttack):
     A Fixed damage Attack
     """
     def __init__(
-        self,
-        stat_max: Statistic | None = None,
-        stat_current: Statistic | None = None,
-        level: int = 0,
-        name: str | None = None
+        self, 
+        power: int = 0, 
+        name: str | None=None, 
+        description: str | None=None
     ):
         super().__init__(
-            stat_max=None, stat_current=stat_current, level=level, name=name, type_pk="Defender"
+            power=power, name=name, description=description
         )
-
-    def get_pokemon_attack_coef(self) -> float:
+        
+    def def compute_damage(self, APkm, APkm) -> int:
         """
-        Compute a damage multiplier related to the pokemon type.
+        Compute a damage related to the pokemon type.
 
         Returns :
             float : the multiplier
         """
-        return 1 + (self.attack_current + self.defense_current) / 200
+        return power
