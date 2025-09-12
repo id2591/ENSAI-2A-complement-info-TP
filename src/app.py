@@ -2,8 +2,8 @@ from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from typing import Dict
 
-app = FastAPI()
 
+app = FastAPI()
 
 @app.get("/hello")
 async def get_hello():
@@ -37,8 +37,9 @@ def create_character(character: Personnage):
     return character
 
 
+
 # Run the FastAPI application
 if __name__ == "__main__":
     import uvicorn
 
-    uvicorn.run(app, host="0.0.0.0", port=80)
+    uvicorn.run(app, host="0.0.0.0", port=5000, root_path="/proxy/5000/")

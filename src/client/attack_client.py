@@ -43,6 +43,17 @@ class AttackClient(metaclass=Singleton):
             #   create an attack using the data contained in the json
             #   see class AttackFactory to do this
 
+            attack = AttackFactory().instantiate_attack(
+                name = "string",
+                id = 0,
+                attack_type = "string",
+                power = 0,
+                accuracy = 0,
+                element = "string",
+                description = "string",
+                url = "string"
+            )
+
         return attack
 
 
