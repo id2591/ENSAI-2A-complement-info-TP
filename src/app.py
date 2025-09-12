@@ -36,7 +36,10 @@ def create_character(character: Personnage):
     character_id += 1
     return character
 
-
+# lister les personnages ???
+@app.get("/character_list/")
+def character_list() -> list[Personnage]:
+    return [character for character in characters_db.values()]
 
 # Run the FastAPI application
 if __name__ == "__main__":
