@@ -66,7 +66,7 @@ class AttackDao(metaclass=Singleton):
                     FROM tp.attack a
                     JOIN tp.attack_type at
                         ON a.id_attack_type = at.id_attack_type
-                    WHERE a.id_attack = %(id_attack)s
+                    WHERE a.id_attack = %(id_attack)s;
                     """,
                     {
                         "id_attack": id,
@@ -98,25 +98,36 @@ class AttackDao(metaclass=Singleton):
         with DBConnection().connection as connection:
             with connection.cursor() as cursor:
                 cursor.execute(
-                    
+                    """
+                    SELECT (a.id_attack, a.power, a.accuracy, a.element, a.attack_name, a.attack_description, at.attack_type_name)
+                    FROM tp.attack a
+                    JOIN tp.attack_type at
+                        ON aid_attack_type = at.id_attack_type
+                    ORDER BY a.id_attack
+                    LIMIT %(limit)s
+                    OFFSET %(offset)s;
+                    """,
+                    {
+                        "limit": limit,
+                        "offset": offset
+                    }
                 )
+                rows = cursor.fetchall()
 
-                # to store raw results
-                res = cursor.fetchall()
+        factory = AttackFactory()
+        return [
+            factory.instantiate_attack(
+                type=row["attack_type_name"],
+                id=row["id_attack"],
+                power=row["power"],
+                name=row["attack_name"],
+                description=row["attack_description"],
+                accuracy=row["accuracy"],
+                element=row["element"],
+            )
+            for row in rows
+        ]
 
-        # Create an empty list to store formatted results
-        attack: List[str] = []
-
-        # if the SQL query returned results (ie. res not None)
-        if res:
-            for row in res:
-                type_attack.append(row["attack_name"])
-
-                print(row["id_attack"])
-                print(row["attack_name"])
-                print(row["attack_description"])
-
-        return attack
 
 if __name__ == "__main__":
     # Pour charger les variables d'environnement contenues dans le fichier .env
